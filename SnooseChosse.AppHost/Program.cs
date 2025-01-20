@@ -10,11 +10,6 @@ var productservice = builder.AddProject<Projects.ProductService>("productservice
     .WaitFor(productdb)
     .WithExternalHttpEndpoints();
 
-builder.AddNpmApp("reactvite", "../frontendservice")
-    .WithReference(productservice)
-    .WithEnvironment("BROWSER", "none")
-    .WithHttpEndpoint(env: "VITE_PORT")
-    .WithExternalHttpEndpoints()
-    .PublishAsDockerFile();
+
 
 builder.Build().Run();
