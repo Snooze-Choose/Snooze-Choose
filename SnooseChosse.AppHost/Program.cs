@@ -20,7 +20,3 @@ builder.AddNpmApp("vue", "../FrontendService")
 
 
 builder.Build().Run();
-
-
-
-builder.Build().Run();
