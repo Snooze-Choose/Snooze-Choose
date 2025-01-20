@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProductService.Models;
 
 namespace ProductService
 {
     public class ProductContext : DbContext
     {
-        public ProductContext(DbContextOptions<ProductContext> options) : base(options)
-        {
-            
-        }
+        public ProductContext(DbContextOptions<ProductContext> options) : base(options){}
 
         public DbSet<Product> Products { get; set; } = default!;
+        public DbSet<Category> Categories { get; set; } = default!;
     }
     public static class Extensions
     {
@@ -35,14 +34,17 @@ namespace ProductService
     {
         public static void Initialize(ProductContext context)
         {
-            if (context.Products.Any())
+            if (context.Products.Any() || context.Categories.Any())
                 return;
+
+            var outdoor = new Category() { Name = "Outdoor" };
 
             var products = new List<Product>
         {
-            new Product { Name = "Solar Powered Flashlight"},
+            new Product { Name = "Solar Powered Flashlight", Price = 5.0m, Stars=4, Description="Eine solar betriebene Lampe", Category=outdoor },
         };
 
+            context.Add(outdoor);
             context.AddRange(products);
 
             context.SaveChanges();
