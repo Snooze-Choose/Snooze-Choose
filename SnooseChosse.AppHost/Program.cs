@@ -10,7 +10,7 @@ var productservice = builder.AddProject<Projects.ProductService>("productservice
     .WaitFor(productdb)
     .WithExternalHttpEndpoints();
 
-builder.AddNpmApp("vue", "../AspireJavaScript.Vue")
+builder.AddNpmApp("vue", "../FrontendService")
     .WithReference(productservice)
     .WaitFor(productservice)
     .WithHttpEndpoint(env: "PORT")
