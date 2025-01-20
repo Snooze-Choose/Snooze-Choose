@@ -10,6 +10,17 @@ var productservice = builder.AddProject<Projects.ProductService>("productservice
     .WaitFor(productdb)
     .WithExternalHttpEndpoints();
 
+builder.AddNpmApp("vue", "../AspireJavaScript.Vue")
+    .WithReference(productservice)
+    .WaitFor(productservice)
+    .WithHttpEndpoint(env: "PORT")
+    .WithExternalHttpEndpoints()
+    .PublishAsDockerFile();
+
+
+
+builder.Build().Run();
+
 
 
 builder.Build().Run();
