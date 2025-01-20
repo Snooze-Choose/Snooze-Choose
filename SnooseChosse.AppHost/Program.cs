@@ -5,9 +5,16 @@ var postgres = builder.AddPostgres("postgres")
 
 var productdb = postgres.AddDatabase("productdb");
 
-builder.AddProject<Projects.ProductService>("productservice")
+var productservice = builder.AddProject<Projects.ProductService>("productservice")
     .WithReference(productdb)
     .WaitFor(productdb)
     .WithExternalHttpEndpoints();
+
+builder.AddNpmApp("reactvite", "../frontendservice")
+    .WithReference(productservice)
+    .WithEnvironment("BROWSER", "none")
+    .WithHttpEndpoint(env: "VITE_PORT")
+    .WithExternalHttpEndpoints()
+    .PublishAsDockerFile();
 
 builder.Build().Run();
