@@ -7,6 +7,7 @@ var productdb = postgres.AddDatabase("productdb");
 
 builder.AddProject<Projects.ProductService>("productservice")
     .WithReference(productdb)
-    .WaitFor(productdb);
+    .WaitFor(productdb)
+    .WithExternalHttpEndpoints();
 
 builder.Build().Run();
