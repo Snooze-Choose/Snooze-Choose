@@ -22,10 +22,11 @@ Dieses Projekt verwendet die folgenden Technologien:
 ## Installation
 
 **Requirements:**
-**.NET 9 and .NET SDK**
-**Node.js v22.12.0**
-**Docker (Docker Desktop auf Windows)**
-**(optional Visual Studio 2022)**
+
+- **.NET 9 and .NET SDK**
+- **Node.js v22.12.0**
+- **Docker (Docker Desktop auf Windows)**
+- **(optional Visual Studio 2022)**
 
 ```bash
 # Repository klonen
