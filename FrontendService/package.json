@@ -19,6 +19,7 @@
     "@vueuse/core": "^12.4.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "keycloak-js": "^26.1.0",
     "lucide-vue-next": "^0.473.0",
     "radix-vue": "^1.9.12",
     "tailwind-merge": "^2.6.0",
