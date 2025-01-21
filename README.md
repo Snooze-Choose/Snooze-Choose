@@ -37,12 +37,9 @@ cd Snooze-Choose
 
 # Node Pakete installieren
 cd FrontendService
-
 npm i
 
 # Projekt starten
-
 cd ..
-
 dotnet run --project SnooseChosse.AppHost
 ```
