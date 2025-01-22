@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 import Home from './views/Home.vue';
 import Settings from './views/Settings.vue';
+import Warenkorb from './views/Warenkorb.vue';
 
 // Define routes
 const routes: Array<RouteRecordRaw> = [
@@ -10,9 +11,14 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
+    path: '/settings',
+    name: 'Settings',
     component: Settings,
+  },
+  {
+    path: '/warenkorb',
+    name: 'Warenkorb',
+    component: Warenkorb,
   },
 ];
 

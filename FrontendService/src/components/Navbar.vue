@@ -15,7 +15,7 @@ import {
   <NavigationMenu>
     <NavigationMenuList>
       <NavigationMenuItem>
-        <NavigationMenuLink href="/docs/introduction" :class="navigationMenuTriggerStyle()">
+        <NavigationMenuLink href="/" :class="navigationMenuTriggerStyle()">
           Alle Produkte
         </NavigationMenuLink>
       </NavigationMenuItem>
@@ -86,6 +86,11 @@ import {
       <NavigationMenuItem>
         <NavigationMenuLink href="/docs/introduction" :class="navigationMenuTriggerStyle()">
           Sale
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem >
+        <NavigationMenuLink href="/warenkorb" :class="navigationMenuTriggerStyle()">
+          Warenkorb
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>

@@ -1,12 +1,9 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
-Settings  
+  Warenkorb
 </template>
-  
 
 <style scoped>
-
 </style>
