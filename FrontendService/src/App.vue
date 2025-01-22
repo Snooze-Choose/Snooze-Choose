@@ -3,11 +3,7 @@ import { Button } from '@/components/ui/button'
 </script>
 
 <template>
-  <header>
-    <Button>Click me</Button>
-  </header>
-
-  <main></main>
+  <router-link to="/protected">Go to Item 1</router-link>
 </template>
 
 <style scoped></style>

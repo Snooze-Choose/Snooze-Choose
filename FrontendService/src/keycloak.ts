@@ -8,7 +8,7 @@ const keycloakConfig = {
   clientId: 'vue' // Your client ID
 }
 
-let keycloak: Keycloak.KeycloakInstance
+let keycloak: Keycloak
 
 export function initializeKeycloak(): Promise<any> {
   return new Promise((resolve, reject) => {
