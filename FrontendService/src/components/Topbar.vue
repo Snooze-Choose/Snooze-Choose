@@ -5,9 +5,9 @@ import Usernav from './Usernav.vue';
 <template>
   <div class="">
     <div class="border-b">
-      <div class="flex h-16 items-center">
-        <div class="mr-4">Willkommen bei Snooze & Choose</div>
-        <div>
+      <div class="flex h-16 items-center justify-between">
+        <div class="ml-4">Willkommen bei Snooze & Choose</div>
+        <div class="mr-4">
           <Usernav />
         </div>
       </div>

@@ -9,7 +9,5 @@ import ProductCard from './ProductCard.vue';
     <ProductCard imageUrl="../assets/product.jpeg"></ProductCard>
     <ProductCard imageUrl="../assets/product.jpeg"></ProductCard>
     <ProductCard imageUrl="../assets/product.jpeg"></ProductCard>
-    
-    
   </div>
 </template>

@@ -4,14 +4,24 @@ import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
-  <Topbar></Topbar>
-  <Navbar></Navbar>
-  <router-view />
+  <div class="app-container">
+    <Topbar></Topbar>
+    <Navbar></Navbar>
+    <div class="content">
+      <router-view />
+    </div>
+  </div>
 </template>
 
-<style>
-div {
-  max-width: 1500px;
+<style scoped>
+.app-container {
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.content {
+  margin-top: 20px;
 }
 </style>
