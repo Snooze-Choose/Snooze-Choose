@@ -14,7 +14,3 @@ import ProductCard from './ProductCard.vue';
     <ProductCard></ProductCard>
   </div>
 </template>
-
-<style scoped>
-
-</style>
