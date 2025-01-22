@@ -40,7 +40,8 @@ namespace ProductService
 
             var products = new List<Product>
         {
-            new Product { Name = "Solar Powered Flashlight"},
+            new Product { Name = "Solar Powered Flashlight", Price=9.99m, LongDescription="Lange Beschreibung des Produktes", ShortDescription ="Kurze Beschreibung"},
+            new Product { Name = "Random Produkt", Price=3.29m, LongDescription="Lange Beschreibung des Produktes", ShortDescription ="Kurze Beschreibung"},
         };
 
             context.AddRange(products);

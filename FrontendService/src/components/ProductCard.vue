@@ -17,30 +17,31 @@ import { useCartStore } from '@/store/cart' // Import des Warenkorb-Stores
 // Props definieren
 const props = defineProps({
   id: {
-    type: Number,
-    required: true,
+    type: String
   },
-  title: {
-    type: String,
-    required: true,
+    title: {
+  type: String
+    },
+  name: {
+    type: String
   },
   description: {
-    type: String,
-    required: true,
+    type: String
+  },
+  short_description: {
+    type: String
   },
   price: {
-    type: Number,
-    required: true,
+    type: Number
   },
   imageUrl: {
-    type: String,
-    required: true,
+    type: String
   },
   quantityLabel: {
     type: String,
     default: 'Menge',
-  },
-})
+  }
+  })
 
 // State für die Menge
 const quantity = ref(1) // Standardmäßig 1
@@ -50,14 +51,14 @@ const cartStore = useCartStore() // Zugriff auf den Warenkorb-Store
 const addToCart = () => {
   console.log("Produkt wird hinzugefügt:", {
     id: props.id,
-    name: props.title,
+    name: props.name,
     price: props.price,
     quantity: quantity.value,
     imageUrl: props.imageUrl,
   });
   cartStore.addProductToCart({
     id: props.id,
-    name: props.title,
+    name: props.name,
     price: props.price,
     quantity: quantity.value,
     imageUrl: props.imageUrl,
@@ -65,22 +66,22 @@ const addToCart = () => {
   console.log("Warenkorb-Inhalt nach dem Hinzufügen:", cartStore.items);
 
    // Toast-Benachrichtigung anzeigen
-   toast.success(`${props.title} wurde dem Warenkorb hinzugefügt!`);
+   toast.success(`${props.name} wurde dem Warenkorb hinzugefügt!`);
 };
 
 </script>
 
 <template>
   <Card class="w-[350px]">
-    <CardHeader>
-      <CardTitle>{{ title }}</CardTitle>
-      <CardDescription>{{ description }}</CardDescription>
+      <CardTitle>{{ name }}</CardTitle>
+      <CardDescription>{{ short_description }}</CardDescription>
     </CardHeader>
-    <CardContent>
-      <img :src="imageUrl" alt="Produktbild" class="w-full h-auto mb-4" />
+      <img src="../assets/product.jpeg" alt="Produktbild" class="w-full h-auto mb-4" />
       <p class="text-sm text-muted-foreground">
-        Detaillierte Beschreibung des Produkts mit allen wichtigen Informationen.
+        {{ description }}
       </p>
+      <div class="flex items-center space-x-2 mt-4">
+  <Input :id="id" type="number" default-value="1" min="1" class="w-16" />
       <div class="flex items-center space-x-2 mt-4">
         <Label for="quantity">{{ quantityLabel }}</Label>
         <Input
@@ -92,7 +93,7 @@ const addToCart = () => {
         />
       </div>
     </CardContent>
-    <CardFooter class="flex justify-between items-center">
+      <CardFooter class="flex justify-between items-center">
       <span class="text-lg font-bold">Preis: {{ price.toFixed(2) }} €</span>
       <Button @click="addToCart">In den Warenkorb</Button>
     </CardFooter>
