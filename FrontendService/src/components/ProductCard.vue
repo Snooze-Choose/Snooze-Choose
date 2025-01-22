@@ -25,7 +25,7 @@ import { Label } from '@/components/ui/label'
       </p>
       <div class="flex items-center space-x-2 mt-4">
         <Label for="quantity">Menge</Label>
-        <Input id="quantity" type="number" default-value="1" min="1" value="1" class="w-16" />
+        <Input id="quantity" type="number" default-value="1" min="1" class="w-16" />
       </div>
     </CardContent>
     <CardFooter class="flex justify-between items-center">
