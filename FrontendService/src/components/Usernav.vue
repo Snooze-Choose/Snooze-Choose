@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from './ui/avatar';
+import router from '@/router'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 
-import { Button } from './ui/button';
+import { Button } from './ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,8 +11,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+  DropdownMenuTrigger
+} from './ui/dropdown-menu'
+
+const navigateToProfile = () => {
+  router.push('/settings')
+}
 </script>
 
 <template>
@@ -31,17 +32,13 @@ import {
     <DropdownMenuContent class="w-56" align="end">
       <DropdownMenuLabel class="font-normal flex">
         <div class="flex flex-col space-y-1">
-          <p class="text-sm font-medium leading-none">
-            shadcn
-          </p>
-          <p class="text-xs leading-none text-muted-foreground">
-            m@example.com
-          </p>
+          <p class="text-sm font-medium leading-none">shadcn</p>
+          <p class="text-xs leading-none text-muted-foreground">m@example.com</p>
         </div>
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <DropdownMenuItem>
+        <DropdownMenuItem @click="navigateToProfile">
           Profile
           <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
         </DropdownMenuItem>
