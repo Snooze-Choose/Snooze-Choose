@@ -1,7 +1,18 @@
-import './assets/main.css'
+import './assets/main.css';
 
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia'; // Pinia importieren
+import App from './App.vue';
+import router from './router';
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App);
+
+// Pinia erstellen und initialisieren
+const pinia = createPinia();
+app.use(pinia); // Pinia einbinden
+
+// Router verwenden
+app.use(router);
+
+// App mounten
+app.mount('#app');
