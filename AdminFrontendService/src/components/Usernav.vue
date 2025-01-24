@@ -1,21 +1,15 @@
 <script setup lang="ts">
-import router from '@/router'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from './ui/dropdown-menu'
 import keycloak from '@/keycloak'
-
-const navigateTo = (path: string) => {
-  router.push(`/settings/${path}`)
-}
 
 const logout = () => {
   keycloak.logout({ redirectUri: `${window.location.origin}/` })

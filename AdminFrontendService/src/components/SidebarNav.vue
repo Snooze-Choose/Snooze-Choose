@@ -17,8 +17,8 @@ const sidebarNavItems: Item[] = [
     href: '/orders'
   },
   {
-    title: 'Shop einstellungen',
-    href: '/config'
+    title: 'Settings',
+    href: '/settings'
   }
 ]
 </script>

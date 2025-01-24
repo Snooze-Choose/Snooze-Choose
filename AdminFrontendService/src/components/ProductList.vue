@@ -15,5 +15,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-wrap justify-start gap-4">Hier sind die Produdkte</div>
+  <div>Hier sind die Produdkte</div>
 </template>

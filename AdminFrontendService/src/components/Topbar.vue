@@ -3,7 +3,7 @@ import Usernav from './Usernav.vue'
 </script>
 
 <template>
-  <div class="">
+  <div class="bg-red-500">
     <div class="border-b">
       <div class="flex h-16 items-center justify-between">
         <div class="ml-4">Willkommen bei Snooze & Choose | ADMIN-OBERFLÄCHE</div>
