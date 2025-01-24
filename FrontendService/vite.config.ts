@@ -18,6 +18,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  envPrefix: 'services',
   server: {
     host: true,
     port: parseInt(process.env.PORT ?? '5173'),

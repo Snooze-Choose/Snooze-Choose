@@ -5,6 +5,10 @@ var postgres = builder.AddPostgres("postgres")
 
 var productdb = postgres.AddDatabase("productdb");
 
+var keycloak = builder.AddKeycloak("keycloak", 8080)
+    .WithRealmImport("Realms")
+    .WithDataVolume();
+
 var productservice = builder.AddProject<Projects.ProductService>("productservice")
     .WithReference(productdb)
     .WaitFor(productdb)
@@ -12,6 +16,7 @@ var productservice = builder.AddProject<Projects.ProductService>("productservice
 
 builder.AddNpmApp("vue", "../FrontendService")
     .WithReference(productservice)
+    .WithReference(keycloak)
     .WaitFor(productservice)
     .WithHttpEndpoint(env: "PORT")
     .WithExternalHttpEndpoints()

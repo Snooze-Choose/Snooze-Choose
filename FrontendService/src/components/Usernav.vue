@@ -10,12 +10,16 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger
 } from './ui/dropdown-menu'
+import keycloak from '@/keycloak'
 
 const navigateTo = (path: string) => {
   router.push(`/settings/${path}`)
+}
+
+const logout = () => {
+  keycloak.logout({ redirectUri: `${window.location.origin}/` })
 }
 </script>
 
@@ -43,7 +47,7 @@ const navigateTo = (path: string) => {
         <DropdownMenuItem @click="navigateTo('appearance')"> Appearance </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      <DropdownMenuItem> Log out </DropdownMenuItem>
+      <DropdownMenuItem @click="logout"> Log out </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>

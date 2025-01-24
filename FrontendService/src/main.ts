@@ -3,5 +3,17 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import keycloak from './keycloak'
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App)
+
+keycloak
+  .init({ onLoad: 'check-sso' })
+  .then((authenticated) => {
+    console.log(authenticated ? 'Authenticated' : 'Not authenticated')
+    app.use(router)
+    app.mount('#app')
+  })
+  .catch((error) => {
+    console.error(error)
+  })
