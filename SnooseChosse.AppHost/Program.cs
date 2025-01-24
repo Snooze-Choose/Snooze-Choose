@@ -23,6 +23,13 @@ builder.AddNpmApp("vue", "../FrontendService")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 
-
+builder.AddNpmApp("vue2", "../AdminFrontendService")
+    .WithReference(productservice)
+    .WithReference(keycloak)
+    .WaitFor(productservice)
+    .WaitFor(keycloak)
+    .WithHttpEndpoint(env: "PORT")
+    .WithExternalHttpEndpoints()
+    .PublishAsDockerFile();
 
 builder.Build().Run();
