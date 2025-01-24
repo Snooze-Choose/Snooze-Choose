@@ -14,8 +14,8 @@ import {
   DropdownMenuTrigger
 } from './ui/dropdown-menu'
 
-const navigateToProfile = () => {
-  router.push('/settings')
+const navigateTo = (path: string) => {
+  router.push(`/settings/${path}`)
 }
 </script>
 
@@ -38,25 +38,12 @@ const navigateToProfile = () => {
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <DropdownMenuItem @click="navigateToProfile">
-          Profile
-          <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          Billing
-          <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          Settings
-          <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-        </DropdownMenuItem>
-        <DropdownMenuItem>New Team</DropdownMenuItem>
+        <DropdownMenuItem @click="navigateTo('profile')"> Profile </DropdownMenuItem>
+        <DropdownMenuItem @click="navigateTo('orders')"> Meine Bestellungen </DropdownMenuItem>
+        <DropdownMenuItem @click="navigateTo('appearance')"> Appearance </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
-        Log out
-        <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-      </DropdownMenuItem>
+      <DropdownMenuItem> Log out </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>
