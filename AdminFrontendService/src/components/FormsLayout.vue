@@ -6,9 +6,9 @@ import SidebarNav from './SidebarNav.vue'
 <template>
   <div class="">
     <div class="space-y-0.5">
-      <h2 class="text-2xl font-bold tracking-tight">Settings</h2>
+      <h2 class="text-2xl font-bold tracking-tight">Shop Einstellungen</h2>
       <p class="text-muted-foreground">
-        Hier kannst du deine Einstellungen einsehen und verändern.
+        Hier kannst du deine Bestellungen einsehen oder deine Produkte im Shop verwalten.
       </p>
     </div>
     <Separator class="my-6" />

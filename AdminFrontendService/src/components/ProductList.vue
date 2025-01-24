@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import ProductCard from './ProductCard.vue'
 
 const products = ref([])
 
@@ -16,14 +15,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-wrap justify-start gap-4">
-    <ProductCard
-      v-for="product in products"
-      :key="product.id"
-      :name="product.name"
-      :short_description="product.shortDescription"
-      :description="product.longDescription"
-      :price="product.price"
-    />
-  </div>
+  <div class="flex flex-wrap justify-start gap-4">Hier sind die Produdkte</div>
 </template>

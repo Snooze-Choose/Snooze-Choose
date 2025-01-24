@@ -9,16 +9,16 @@ interface Item {
 
 const sidebarNavItems: Item[] = [
   {
-    title: 'Profile',
-    href: '/settings/profile'
+    title: 'Produkte',
+    href: '/products'
   },
   {
-    title: 'Meine Bestellungen',
-    href: '/settings/orders'
+    title: 'Bestellungen',
+    href: '/orders'
   },
   {
-    title: 'Appearance',
-    href: '/settings/appearance'
+    title: 'Shop einstellungen',
+    href: '/config'
   }
 ]
 </script>

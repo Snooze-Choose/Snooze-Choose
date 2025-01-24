@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ProductList from '@/components/ProductList.vue'
+import FormsLayout from '@/components/FormsLayout.vue'
 </script>
 
 <template>
-  <div>Hello world</div>
+  <FormsLayout></FormsLayout>
 </template>

@@ -1,31 +1,27 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import Home from './views/Home.vue'
-// import keycloak from './keycloak'
+import ProductList from './components/ProductList.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    redirect: '/products',
+    children: [
+      {
+        path: '/products',
+        name: 'Products',
+        component: ProductList,
+        meta: { requiresAuth: true }
+      }
+    ]
   }
 ]
 
-// Create and configure the router
 const router = createRouter({
   history: createWebHistory(),
-  routes // Short for `routes: routes`
+  routes
 })
-
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.requiresAuth) {
-//     if (keycloak.authenticated) {
-//       next() // Allow access
-//     } else {
-//       keycloak.login() // Redirect to Keycloak login
-//     }
-//   } else {
-//     next() // Allow access to non-restricted routes
-//   }
-// })
 
 export default router
