@@ -10,7 +10,6 @@ const app = createApp(App)
 keycloak
   .init({ onLoad: 'check-sso' })
   .then((authenticated) => {
-    console.log(authenticated ? 'Authenticated' : 'Not authenticated')
     app.use(router)
     app.mount('#app')
   })
