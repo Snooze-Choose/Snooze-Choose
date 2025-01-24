@@ -18,6 +18,7 @@ builder.AddNpmApp("vue", "../FrontendService")
     .WithReference(productservice)
     .WithReference(keycloak)
     .WaitFor(productservice)
+    .WaitFor(keycloak)
     .WithHttpEndpoint(env: "PORT")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
