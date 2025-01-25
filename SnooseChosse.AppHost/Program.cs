@@ -14,7 +14,7 @@ var productservice = builder.AddProject<Projects.ProductService>("productservice
     .WaitFor(productdb)
     .WithExternalHttpEndpoints();
 
-builder.AddNpmApp("vue", "../FrontendService")
+builder.AddNpmApp("ShopFrontend", "../FrontendService")
     .WithReference(productservice)
     .WithReference(keycloak)
     .WaitFor(productservice)
@@ -23,7 +23,7 @@ builder.AddNpmApp("vue", "../FrontendService")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 
-builder.AddNpmApp("vue2", "../AdminFrontendService")
+builder.AddNpmApp("AdminFrontend", "../AdminFrontendService")
     .WithReference(productservice)
     .WithReference(keycloak)
     .WaitFor(productservice)
