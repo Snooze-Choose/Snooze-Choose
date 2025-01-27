@@ -1,38 +1,42 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
 interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
+  id: number
+  name: string
+  price: number
+  quantity: number
+  imageUrl: string
 }
 
-export const useCartStore = defineStore("cart", {
+export const useCartStore = defineStore('cart', {
   state: () => ({
-    items: [] as CartItem[],
+    items: [] as CartItem[]
   }),
   getters: {
-    cartTotal: (state) =>
-      state.items.reduce((total, item) => total + item.price * item.quantity, 0),
+    cartTotal: (state) => state.items.reduce((total, item) => total + item.price * item.quantity, 0)
   },
   actions: {
     addProductToCart(product: CartItem) {
-      const existingItem = this.items.find((item) => item.id === product.id);
+      const existingItem = this.items.find((item) => item.id === product.id)
       if (existingItem) {
-        existingItem.quantity++;
+        existingItem.quantity += product.quantity // Menge addieren
       } else {
-        this.items.push({ ...product, quantity: 1 });
+        this.items.push({ ...product }) // Neues Produkt mit der Menge hinzufügen
       }
+      console.log('Aktueller Warenkorb:', this.items)
     },
     updateQuantity(productId: number, quantity: number) {
-      const item = this.items.find((item) => item.id === productId);
+      const item = this.items.find((item) => item.id === productId)
       if (item) {
-        item.quantity = quantity;
+        item.quantity = quantity
       }
     },
     removeProductFromCart(productId: number) {
-      this.items = this.items.filter((item) => item.id !== productId);
+      this.items = this.items.filter((item) => item.id !== productId)
     },
+    clearCart() {
+      this.items = []
+    }
   },
-});
+  persist: true // Persistenz aktivieren
+})
