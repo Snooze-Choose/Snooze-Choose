@@ -1,3 +1,5 @@
+/// <reference types="vite/types/importMeta.d.ts" />
+
 import Keycloak from 'keycloak-js'
 
 const keycloak: Keycloak = new Keycloak({
