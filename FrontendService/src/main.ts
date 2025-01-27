@@ -1,18 +1,16 @@
 import './assets/main.css';
 
 import { createApp } from 'vue';
-import { createPinia } from 'pinia'; // Pinia importieren
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'; // Plugin importieren
 import App from './App.vue';
 import router from './router';
 
 const app = createApp(App);
 
-// Pinia erstellen und initialisieren
 const pinia = createPinia();
-app.use(pinia); // Pinia einbinden
+pinia.use(piniaPluginPersistedstate); // Persistenz aktivieren
+app.use(pinia);
 
-// Router verwenden
 app.use(router);
-
-// App mounten
 app.mount('#app');
