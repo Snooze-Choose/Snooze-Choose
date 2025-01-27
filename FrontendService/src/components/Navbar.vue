@@ -11,9 +11,15 @@ import {
 
 // Pinia Store für Warenkorb importieren
 import { useCartStore } from '@/store/cart'
+import { computed } from 'vue' // Computed importieren
 
 // Zugriff auf den Warenkorb-Store
 const cartStore = useCartStore()
+
+// Reaktive Berechnung der Anzahl der Artikel im Warenkorb
+const cartItemCount = computed(() =>
+  cartStore.items.reduce((total, item) => total + item.quantity, 0) // Anzahl der Artikel berechnen
+)
 </script>
 
 <template>
@@ -84,7 +90,7 @@ const cartStore = useCartStore()
       <!-- Link: Warenkorb -->
       <NavigationMenuItem>
         <NavigationMenuLink href="/warenkorb" :class="navigationMenuTriggerStyle()">
-          Warenkorb ({{ cartStore.items.length }})
+          Warenkorb ({{ cartItemCount }}) <!-- Reaktiver Zugriff -->
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>
