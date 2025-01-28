@@ -20,6 +20,11 @@ const cartTotal = computed(() => {
   return cartStore.cartTotal
 })
 
+// Berechnung der Gesamtmenge
+const cartQuantityTotal = computed(() => {
+  return cartStore.items.reduce((total, item) => total + item.quantity, 0);
+});
+
 const removeFromCart = (id: number) => {
   cartStore.removeProductFromCart(id)
 }
@@ -73,13 +78,22 @@ const goToCheckout = () => {
         </TableBody>
       </Table>
       <Separator class="my-4" />
+
+      <!-- Gesamtmenge -->
       <div class="flex justify-between">
+        <p class="text-lg font-bold">Gesamtmenge:</p>
+        <p class="text-lg font-bold">{{ cartQuantityTotal }}</p>
+      </div>
+
+      <!-- Gesamtsumme -->
+      <div class="flex justify-between mt-2">
         <p class="text-lg font-bold">Gesamtsumme:</p>
         <p class="text-lg font-bold">{{ cartTotal.toFixed(2) }} €</p>
       </div>
+      
       <Separator class="my-4" />
       <div class="flex justify-between mt-4">
-        <Button variant="destructive" @click="clearCart">Warenkorb leeren</Button>
+        <Button variant="secondary" @click="clearCart">Warenkorb leeren</Button>
         <Button variant="default" class="ml-auto" @click="goToCheckout">Zur Kasse</Button>
       </div>
     </div>
