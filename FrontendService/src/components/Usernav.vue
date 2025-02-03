@@ -77,9 +77,12 @@ const getInitials = (firstName: string, lastName: string) => {
       </DropdownMenuGroup>
 
       <DropdownMenuSeparator v-if="isAuthenticated" />
-
       <DropdownMenuItem v-if="isAuthenticated" @click="logout">Log out</DropdownMenuItem>
-      <DropdownMenuItem v-else @click="keycloak.login()">Login</DropdownMenuItem>
+
+      <DropdownMenuGroup v-if="isAuthenticated == false">
+        <DropdownMenuItem @click="keycloak.login()">Login</DropdownMenuItem>
+        <DropdownMenuItem @click="keycloak.register()">Registrieren</DropdownMenuItem>
+      </DropdownMenuGroup>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>
