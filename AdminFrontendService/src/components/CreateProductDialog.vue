@@ -48,7 +48,7 @@ const onSubmit = form.handleSubmit(async (values) => {
   try {
     const token = keycloak.token
 
-    const response = await fetch('/api/products', {
+    await fetch('/api/products', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
