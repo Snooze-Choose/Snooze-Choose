@@ -20,7 +20,7 @@ builder.Services.AddAuthentication()
                     configureOptions: options =>
                     {
                         options.RequireHttpsMetadata = false;
-                        options.Audience = "adminfrontend";
+                        options.Audience = "account";
                     });
 
 builder.Services.AddAuthorizationBuilder();

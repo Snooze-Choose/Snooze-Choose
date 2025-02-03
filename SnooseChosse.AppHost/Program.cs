@@ -11,6 +11,8 @@ var keycloak = builder.AddKeycloak("keycloak", 8080)
 
 var productservice = builder.AddProject<Projects.ProductService>("productservice")
     .WithReference(productdb)
+    .WithReference(keycloak)
+    .WaitFor(keycloak)
     .WaitFor(productdb)
     .WithExternalHttpEndpoints();
 
