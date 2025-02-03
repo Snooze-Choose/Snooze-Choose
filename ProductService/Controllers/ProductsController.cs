@@ -87,5 +87,38 @@ namespace ProductService.Controllers
 
             return NoContent();
         }
+
+        [Authorize]
+        [HttpPost("{id}/upload")]
+        public async Task<IActionResult> UploadImage(int id, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("Please upload a valid file");
+
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+                return NotFound("Product not found");
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var uniqueFileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            product.ImageUrl = $"/images/{uniqueFileName}";
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { ImageUrl = product.ImageUrl });
+        }
+
     }
 }

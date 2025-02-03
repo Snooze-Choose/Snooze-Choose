@@ -31,6 +31,10 @@ const props = defineProps({
     type: String
   }
 })
+
+function getFullImageUrl() {
+  return import.meta.env.services__productservice__https__0 + props.imageUrl
+}
 </script>
 
 <template>
@@ -40,7 +44,7 @@ const props = defineProps({
       <CardDescription>{{ short_description }}</CardDescription>
     </CardHeader>
     <CardContent>
-      <img src="../assets/product.jpeg" alt="Produktbild" class="w-full h-auto mb-4" />
+      <img :src="getFullImageUrl()" alt="Produktbild" class="w-full h-auto mb-4" />
       <p class="text-sm text-muted-foreground">
         {{ description }}
       </p>

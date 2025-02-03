@@ -24,6 +24,7 @@ onMounted(async () => {
       :short_description="product.shortDescription"
       :description="product.longDescription"
       :price="product.price"
+      :imageUrl="product.imageUrl"
     />
   </div>
 </template>
