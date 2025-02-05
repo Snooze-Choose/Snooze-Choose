@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 interface CartItem {
-  id: number
+  id: string
   name: string
   price: number
   quantity: number
@@ -25,13 +25,13 @@ export const useCartStore = defineStore('cart', {
       }
       console.log('Aktueller Warenkorb:', this.items)
     },
-    updateQuantity(productId: number, quantity: number) {
+    updateQuantity(productId: string, quantity: number) {
       const item = this.items.find((item) => item.id === productId)
       if (item) {
         item.quantity = quantity
       }
     },
-    removeProductFromCart(productId: number) {
+    removeProductFromCart(productId: string) {
       this.items = this.items.filter((item) => item.id !== productId)
     },
     clearCart() {
