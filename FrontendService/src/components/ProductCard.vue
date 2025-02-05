@@ -24,9 +24,9 @@ const props = defineProps({
   quantityLabel: { type: String, default: 'Menge' }
 })
 
-
 function getFullImageUrl() {
   return import.meta.env.services__productservice__https__0 + props.imageUrl
+}
 
 // State für die Menge
 const quantity = ref(1) // Standardmäßig 1
