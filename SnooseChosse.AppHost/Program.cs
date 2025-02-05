@@ -6,7 +6,6 @@ var postgres = builder.AddPostgres("postgres")
 var productdb = postgres.AddDatabase("productdb");
 
 var keycloak = builder.AddKeycloak("keycloak", 8080)
-    .WithRealmImport("Realms")
     .WithDataVolume();
 
 var productservice = builder.AddProject<Projects.ProductService>("productservice")
