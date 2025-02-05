@@ -25,7 +25,7 @@ const cartQuantityTotal = computed(() => {
   return cartStore.items.reduce((total, item) => total + item.quantity, 0);
 });
 
-const removeFromCart = (id: number) => {
+const removeFromCart = (id: string) => {
   cartStore.removeProductFromCart(id)
 }
 
@@ -78,12 +78,6 @@ const goToCheckout = () => {
         </TableBody>
       </Table>
       <Separator class="my-4" />
-
-      <!-- Gesamtmenge -->
-      <div class="flex justify-between">
-        <p class="text-lg font-bold">Gesamtmenge:</p>
-        <p class="text-lg font-bold">{{ cartQuantityTotal }}</p>
-      </div>
 
       <!-- Gesamtsumme -->
       <div class="flex justify-between mt-2">
