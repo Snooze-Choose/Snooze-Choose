@@ -2,7 +2,18 @@
 import { ref, onMounted } from 'vue'
 import ProductCard from './ProductCard.vue'
 
-const products = ref([])
+// Interface für die Produkte definieren
+interface Product {
+  id: string;
+  name: string;
+  shortDescription: string;
+  longDescription: string;
+  price: number;
+  imageUrl: string;
+}
+
+// `products` mit dem korrekten Typ versehen
+const products = ref<Product[]>([])
 
 onMounted(async () => {
   try {
@@ -20,10 +31,12 @@ onMounted(async () => {
     <ProductCard
       v-for="product in products"
       :key="product.id"
+      :id="product.id"
       :name="product.name"
       :short_description="product.shortDescription"
       :description="product.longDescription"
       :price="product.price"
+      :imageUrl="product.imageUrl"
     />
   </div>
 </template>
