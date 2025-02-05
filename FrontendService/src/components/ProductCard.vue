@@ -7,21 +7,17 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from 'vue-sonner' // Import der Toast-Benachrichtigungen
 import { useCartStore } from '@/store/cart' // Import des Warenkorb-Stores
 
-// Props definieren
 const props = defineProps({
   id: {
     type: String
   },
-    title: {
-  type: String
-    },
   name: {
     type: String
   },
