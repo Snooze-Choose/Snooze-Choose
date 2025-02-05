@@ -27,6 +27,7 @@ import {
   getSortedRowModel,
   useVueTable
 } from '@tanstack/vue-table'
+import CreateProductDialog from './CreateProductDialog.vue'
 
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
 
@@ -38,12 +39,11 @@ interface Product {
   longDescription: string
 }
 
-const products = ref<Product[]>([]) // Speichert die Produktdaten
+const products = ref<Product[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
 
-// API-Daten laden
-onMounted(async () => {
+const fetchProducts = async () => {
   try {
     const response = await fetch('/api/products')
     if (!response.ok) throw new Error('Failed to fetch products')
@@ -53,9 +53,12 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+}
+
+onMounted(() => {
+  fetchProducts()
 })
 
-// Tabellen-Spalten
 const columns: ColumnDef<Product>[] = [
   {
     accessorKey: 'id',
@@ -87,7 +90,6 @@ const columns: ColumnDef<Product>[] = [
   }
 ]
 
-// Vue Table Einstellungen
 const sorting = ref<SortingState>([])
 const table = useVueTable({
   data: products,
@@ -102,6 +104,10 @@ const table = useVueTable({
     }
   }
 })
+
+const onProductCreated = () => {
+  fetchProducts()
+}
 </script>
 
 <template>
@@ -113,6 +119,7 @@ const table = useVueTable({
         :model-value="table.getColumn('name')?.getFilterValue() as string"
         @update:model-value="table.getColumn('name')?.setFilterValue($event)"
       />
+      <CreateProductDialog @productCreated="onProductCreated" />
     </div>
 
     <div v-if="loading" class="text-center py-4">Loading products...</div>

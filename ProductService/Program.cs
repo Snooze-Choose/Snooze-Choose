@@ -13,6 +13,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddOpenApi();
 
+builder.Services.AddAuthentication()
+                .AddKeycloakJwtBearer(
+                    serviceName: "keycloak",
+                    realm: "adminfrontend",
+                    configureOptions: options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.Audience = "account";
+                    });
+
+builder.Services.AddAuthorizationBuilder();
+
 builder.Services.AddControllers();
 var app = builder.Build();
 
@@ -24,6 +36,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 app.UseCors(static builder =>
