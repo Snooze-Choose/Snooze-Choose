@@ -72,30 +72,31 @@ const addToCart = () => {
 </script>
 
 <template>
-  <Card class="w-[350px]">
-      <CardTitle>{{ name }}</CardTitle>
-      <CardDescription>{{ short_description }}</CardDescription>
-    </CardHeader>
-      <img src="../assets/product.jpeg" alt="Produktbild" class="w-full h-auto mb-4" />
-      <p class="text-sm text-muted-foreground">
-        {{ description }}
-      </p>
-      <div class="flex items-center space-x-2 mt-4">
-  <Input :id="id" type="number" default-value="1" min="1" class="w-16" />
-      <div class="flex items-center space-x-2 mt-4">
-        <Label for="quantity">{{ quantityLabel }}</Label>
-        <Input
-          id="quantity"
-          type="number"
-          v-model.number="quantity"
-          min="1"
-          class="w-16"
-        />
-      </div>
-    </CardContent>
-      <CardFooter class="flex justify-between items-center">
-      <span class="text-lg font-bold">Preis: {{ price.toFixed(2) }} €</span>
-      <Button @click="addToCart">In den Warenkorb</Button>
-    </CardFooter>
-  </Card>
+    <Card class="w-[350px]">
+        <CardHeader>
+            <CardTitle>{{ name }}</CardTitle>
+            <CardDescription>{{ short_description }}</CardDescription>
+        </CardHeader>
+        <CardContent>
+            <img src="../assets/product.jpeg" alt="Produktbild" class="w-full h-auto mb-4" />
+            <p class="text-sm text-muted-foreground">
+                {{ description }}
+            </p>
+            <div class="flex items-center space-x-2 mt-4">
+                <Input :id="id" type="number" default-value="1" min="1" class="w-16" />
+            </div>
+                <div class="flex items-center space-x-2 mt-4">
+                    <Label for="quantity">{{ quantityLabel }}</Label>
+                    <Input id="quantity"
+                           type="number"
+                           v-model.number="quantity"
+                           min="1"
+                           class="w-16" />
+                </div>
+        </CardContent>
+        <CardFooter class="flex justify-between items-center">
+            <span class="text-lg font-bold">Preis: {{ price.toFixed(2) }} €</span>
+            <Button @click="addToCart">In den Warenkorb</Button>
+        </CardFooter>
+    </Card>
 </template>
