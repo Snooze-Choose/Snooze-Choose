@@ -13,6 +13,18 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddCors();
 
+builder.Services.AddAuthentication()
+                .AddKeycloakJwtBearer(
+                    serviceName: "keycloak",
+                    realm: "adminfrontend",
+                    configureOptions: options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.Audience = "account";
+                    });
+
+builder.Services.AddAuthorizationBuilder();
+
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
