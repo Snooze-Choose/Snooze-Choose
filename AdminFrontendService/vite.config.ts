@@ -23,10 +23,16 @@ export default defineConfig({
     host: true,
     port: parseInt(process.env.PORT ?? '5173'),
     proxy: {
-      '/api': {
+      '/api/products': {
         target:
           process.env.services__productservice__https__0 ||
           process.env.services__weatherapi__http__0,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false
+      },
+      '/api/orders': {
+        target: process.env.services__orderservice__https__0,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure: false

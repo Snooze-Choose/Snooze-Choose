@@ -1,17 +1,17 @@
-using ProductService;
+using OrderService;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
 // Add services to the container.
-builder.AddNpgsqlDbContext<ProductContext>(connectionName: "productdb");
+builder.AddNpgsqlDbContext<OrderContext>(connectionName: "orderdb");
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddCors();
+
+builder.Services.AddControllers();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddCors();
 
 builder.Services.AddAuthentication()
                 .AddKeycloakJwtBearer(
@@ -25,19 +25,15 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddAuthorizationBuilder();
 
-builder.Services.AddControllers();
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
-
-app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 app.UseCors(static builder =>
@@ -45,7 +41,8 @@ app.UseCors(static builder =>
         .AllowAnyHeader()
         .AllowAnyOrigin());
 
+app.UseAuthorization();
+
 app.MapControllers();
 app.CreateDbIfNotExists();
 app.Run();
-

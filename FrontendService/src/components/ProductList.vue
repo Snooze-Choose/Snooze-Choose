@@ -2,17 +2,15 @@
 import { ref, onMounted } from 'vue'
 import ProductCard from './ProductCard.vue'
 
-// Interface für die Produkte definieren
 interface Product {
-  id: string;
-  name: string;
-  shortDescription: string;
-  longDescription: string;
-  price: number;
-  imageUrl: string;
+  id: string
+  name: string
+  shortDescription: string
+  longDescription: string
+  price: number
+  imageUrl: string
 }
 
-// `products` mit dem korrekten Typ versehen
 const products = ref<Product[]>([])
 
 onMounted(async () => {
