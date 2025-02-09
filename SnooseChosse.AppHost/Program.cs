@@ -25,18 +25,22 @@ var orderservice = builder.AddProject<Projects.OrderService>("orderservice")
 
 builder.AddNpmApp("shopfrontend", "../FrontendService")
     .WithReference(productservice)
+    .WithReference(orderservice)
     .WithReference(keycloak)
     .WaitFor(productservice)
     .WaitFor(keycloak)
+    .WaitFor(orderservice)
     .WithHttpEndpoint(env: "PORT")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 
 builder.AddNpmApp("adminfrontend", "../AdminFrontendService")
     .WithReference(productservice)
+    .WithReference(orderservice)
     .WithReference(keycloak)
     .WaitFor(productservice)
     .WaitFor(keycloak)
+    .WaitFor(orderservice)
     .WithHttpEndpoint(env: "PORT")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
