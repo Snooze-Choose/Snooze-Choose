@@ -11,8 +11,8 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { toast } from 'vue-sonner' // Import der Toast-Benachrichtigungen
-import { useCartStore } from '@/store/cart' // Import des Warenkorb-Stores
+import { toast } from 'vue-sonner' 
+import { useCartStore } from '@/store/cart' 
 
 const props = defineProps({
   id: { type: String, required: true },
@@ -28,11 +28,9 @@ function getFullImageUrl() {
   return import.meta.env.services__productservice__https__0 + props.imageUrl
 }
 
-// State für die Menge
-const quantity = ref(1) // Standardmäßig 1
-const cartStore = useCartStore() // Zugriff auf den Warenkorb-Store
+const quantity = ref(1) 
+const cartStore = useCartStore() 
 
-// Funktion: Produkt in den Warenkorb legen
 const addToCart = () => {
   console.log('Produkt wird hinzugefügt:', {
     id: props.id,
@@ -50,7 +48,6 @@ const addToCart = () => {
   })
   console.log('Warenkorb-Inhalt nach dem Hinzufügen:', cartStore.items)
 
-  // Toast-Benachrichtigung anzeigen
   toast.success(`${props.name} wurde dem Warenkorb hinzugefügt!`)
 }
 </script>

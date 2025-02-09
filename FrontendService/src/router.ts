@@ -33,21 +33,20 @@ const routes: Array<RouteRecordRaw> = [
   }
 ]
 
-// Create and configure the router
 const router = createRouter({
   history: createWebHistory(),
-  routes // Short for `routes: routes`
+  routes 
 })
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     if (keycloak.authenticated) {
-      next() // Allow access
+      next()
     } else {
-      keycloak.login() // Redirect to Keycloak login
+      keycloak.login()
     }
   } else {
-    next() // Allow access to non-restricted routes
+    next()
   }
 })
 

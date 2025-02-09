@@ -9,30 +9,24 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 
-// Pinia Store für Warenkorb importieren
 import { useCartStore } from '@/store/cart'
-import { computed } from 'vue' // Computed importieren
+import { computed } from 'vue'
 
-// Zugriff auf den Warenkorb-Store
 const cartStore = useCartStore()
 
-// Reaktive Berechnung der Anzahl der Artikel im Warenkorb
 const cartItemCount = computed(() =>
-  cartStore.items.reduce((total, item) => total + item.quantity, 0) // Anzahl der Artikel berechnen
+  cartStore.items.reduce((total, item) => total + item.quantity, 0) 
 )
 </script>
 
 <template>
   <NavigationMenu>
     <NavigationMenuList>
-      <!-- Link: Alle Produkte -->
       <NavigationMenuItem>
         <NavigationMenuLink href="/" :class="navigationMenuTriggerStyle()">
           Alle Produkte
         </NavigationMenuLink>
       </NavigationMenuItem>
-
-      <!-- Dropdown: Kategorien -->
       <NavigationMenuItem>
         <NavigationMenuTrigger>Unsere Kategorien</NavigationMenuTrigger>
         <NavigationMenuContent>
@@ -80,14 +74,12 @@ const cartItemCount = computed(() =>
         </NavigationMenuContent>
       </NavigationMenuItem>
 
-      <!-- Link: Sale -->
       <NavigationMenuItem>
         <NavigationMenuLink href="/sale" :class="navigationMenuTriggerStyle()">
           Sale
         </NavigationMenuLink>
       </NavigationMenuItem>
 
-      <!-- Link: Warenkorb -->
       <NavigationMenuItem>
         <NavigationMenuLink href="/warenkorb" :class="navigationMenuTriggerStyle()">
           Warenkorb ({{ cartItemCount }}) <!-- Reaktiver Zugriff -->
