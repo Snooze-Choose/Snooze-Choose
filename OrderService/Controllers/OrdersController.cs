@@ -33,8 +33,14 @@ namespace OrderService.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Order> Post([FromBody] Order order)
         {
+            if (order == null) return BadRequest("Order cannot be null");
+
+            // hier jetzt die Preise der produkte vom productsservice holen und addieren
+
+
+            return CreatedAtAction(nameof(Get), new { id = order.Id }, order);
         }
 
         // PUT api/<OrderController>/5
