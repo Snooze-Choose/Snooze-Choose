@@ -29,6 +29,7 @@ import {
 } from '@tanstack/vue-table'
 
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
+import keycloak from '@/keycloak'
 
 interface Order {
   id: number
@@ -42,8 +43,16 @@ const error = ref<string | null>(null)
 
 const fetchOrders = async () => {
   try {
-    const response = await fetch('/api/orders')
-    if (!response.ok) throw new Error('Failed to fetch products')
+    loading.value = true
+    const token = keycloak.token
+    const response = await fetch('/api/orders', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    if (!response.ok) throw new Error('Failed to fetch orders')
     orders.value = await response.json()
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'Unknown error occurred'

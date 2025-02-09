@@ -7,11 +7,10 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.AddNpgsqlDbContext<OrderContext>(connectionName: "orderdb");
 
-
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors();
+builder.Services.AddOpenApi();
 
 builder.Services.AddAuthentication()
                 .AddKeycloakJwtBearer(
@@ -25,15 +24,17 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddAuthorizationBuilder();
 
+builder.Services.AddControllers();
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 app.UseCors(static builder =>
@@ -41,8 +42,7 @@ app.UseCors(static builder =>
         .AllowAnyHeader()
         .AllowAnyOrigin());
 
-app.UseAuthorization();
-
 app.MapControllers();
 app.CreateDbIfNotExists();
 app.Run();
+
