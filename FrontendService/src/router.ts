@@ -4,6 +4,7 @@ import Settings from './views/Settings.vue'
 import Warenkorb from './views/Warenkorb.vue'
 import Profile from './components/Profile.vue'
 import keycloak from './keycloak'
+import Checkout from './views/Checkout.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -30,24 +31,28 @@ const routes: Array<RouteRecordRaw> = [
     path: '/warenkorb',
     name: 'Warenkorb',
     component: Warenkorb
-  }
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: Checkout
+  }  
 ]
 
-// Create and configure the router
 const router = createRouter({
   history: createWebHistory(),
-  routes // Short for `routes: routes`
+  routes 
 })
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     if (keycloak.authenticated) {
-      next() // Allow access
+      next()
     } else {
-      keycloak.login() // Redirect to Keycloak login
+      keycloak.login()
     }
   } else {
-    next() // Allow access to non-restricted routes
+    next()
   }
 })
 

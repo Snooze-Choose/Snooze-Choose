@@ -19,9 +19,9 @@ export const useCartStore = defineStore('cart', {
     addProductToCart(product: CartItem) {
       const existingItem = this.items.find((item) => item.id === product.id)
       if (existingItem) {
-        existingItem.quantity += product.quantity // Menge addieren
+        existingItem.quantity += product.quantity 
       } else {
-        this.items.push({ ...product }) // Neues Produkt mit der Menge hinzufügen
+        this.items.push({ ...product })
       }
       console.log('Aktueller Warenkorb:', this.items)
     },
@@ -38,5 +38,5 @@ export const useCartStore = defineStore('cart', {
       this.items = []
     }
   },
-  persist: true // Persistenz aktivieren
+  persist: true 
 })
