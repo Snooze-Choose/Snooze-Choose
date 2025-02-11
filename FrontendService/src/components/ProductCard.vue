@@ -25,7 +25,7 @@ const props = defineProps({
 })
 
 function getFullImageUrl() {
-  return import.meta.env.services__productservice__https__0 + props.imageUrl
+  return import.meta.env.services__productservice__https__0 + props.imageUrl 
 }
 
 const quantity = ref(1) 

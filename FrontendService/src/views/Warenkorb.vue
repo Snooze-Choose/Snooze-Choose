@@ -8,6 +8,7 @@ import { Alert, AlertTitle } from '@/components/ui/alert'
 import { InfoCircledIcon } from '@radix-icons/vue'
 import { useCartStore } from '@/store/cart'
 import { computed } from 'vue'
+import router from '@/router'
 
 const cartStore = useCartStore()
 const cartItems = computed(() => {
@@ -32,7 +33,7 @@ const clearCart = () => {
 }
 
 const goToCheckout = () => {
-  console.log('Zur Kasse gehen')
+  router.push({ name: 'Checkout' })
 }
 </script>
 
