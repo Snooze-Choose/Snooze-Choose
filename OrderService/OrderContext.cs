@@ -37,10 +37,16 @@ namespace OrderService
             if (context.Orders.Any())
                 return;
 
+            var products = new List<Product>
+            { 
+                new Product("Lecker Bierchen", 12, 0.76m),
+                new Product("Drogen", 100, 10.0m)
+            };
+
             var orders = new List<Order>
-        {
-            new Order { CustomerName="test", Address="test"},
-        };
+            {
+                new Order { CustomerName="Marvin", Address="Vollsteadt", Products=products },
+            };
 
             context.AddRange(orders);
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,11 +18,11 @@ namespace OrderService.Controllers
         }
 
         // GET: api/<OrderController>
-        [Authorize]
+     
         [HttpGet]
         public IEnumerable<Order> Get()
         {
-            return _context.Orders.ToList();
+            return _context.Orders.Include(o => o.Products).ToList();
         }
 
         // GET api/<OrderController>/5
@@ -33,8 +34,15 @@ namespace OrderService.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Order> Post([FromBody] Order order)
         {
+            if (order == null) return BadRequest("Order cannot be null");
+
+
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(Get), new { id = order.Id }, order);
         }
 
         // PUT api/<OrderController>/5

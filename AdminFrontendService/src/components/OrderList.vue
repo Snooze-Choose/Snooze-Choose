@@ -30,16 +30,26 @@ import {
 
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
 import keycloak from '@/keycloak'
+import OrderDetailDialog from './OrderDetailDialog.vue'
 
-interface Order {
+export interface Order {
   id: number
   customerName: string
   address: string
+  products: Products[]
+}
+
+interface Products {
+  id: number
+  name: string
+  amount: number
 }
 
 const orders = ref<Order[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
+const isDialogOpen = ref(false)
+const selectedOrder = ref<Order | null>(null)
 
 const fetchOrders = async () => {
   try {
@@ -79,7 +89,7 @@ const columns: ColumnDef<Order>[] = [
           variant: 'ghost',
           onClick: () => column.toggleSorting(column.getIsSorted() === 'asc')
         },
-        () => ['customerName', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })]
+        () => ['Kunde', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })]
       )
   },
   {
@@ -102,6 +112,11 @@ const table = useVueTable({
     }
   }
 })
+
+const openEditDialog = (order: Order) => {
+  selectedOrder.value = { ...order }
+  isDialogOpen.value = true
+}
 </script>
 
 <template>
@@ -137,19 +152,22 @@ const table = useVueTable({
         <TableBody>
           <template v-if="table.getRowModel().rows?.length">
             <template v-for="row in table.getRowModel().rows" :key="row.id">
-              <TableRow :data-state="row.getIsSelected() && 'selected'">
+              <TableRow
+                :data-state="row.getIsSelected() && 'selected'"
+                @click="openEditDialog(row.original)"
+              >
                 <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
                   <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
                 </TableCell>
               </TableRow>
             </template>
           </template>
-
           <TableRow v-else>
             <TableCell :colspan="columns.length" class="h-24 text-center"> No results. </TableCell>
           </TableRow>
         </TableBody>
       </Table>
     </div>
+    <OrderDetailDialog v-model="isDialogOpen" :selectedOrder="selectedOrder" />
   </div>
 </template>
