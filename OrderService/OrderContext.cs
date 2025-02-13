@@ -45,7 +45,7 @@ namespace OrderService
 
             var orders = new List<Order>
             {
-                new Order { CustomerName="Marvin", Address="Vollsteadt", Products=products },
+                new Order { CustomerName="Hans", Address="Teststraße 4", Products=products },
             };
 
             context.AddRange(orders);
