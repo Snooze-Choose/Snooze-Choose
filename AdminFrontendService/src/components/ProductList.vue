@@ -81,7 +81,7 @@ const columns: ColumnDef<Product>[] = [
     header: 'Price',
     cell: ({ row }) => {
       const price = row.getValue('price')
-      return h('div', {}, `$${price}`)
+      return h('div', {}, `${price} €`)
     }
   },
   {

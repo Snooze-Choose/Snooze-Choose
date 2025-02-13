@@ -40,7 +40,6 @@ namespace OrderService
             var products = new List<Product>
             { 
                 new Product("Lecker Bierchen", 12, 0.76m),
-                new Product("Drogen", 100, 10.0m)
             };
 
             var orders = new List<Order>
