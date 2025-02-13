@@ -40,7 +40,8 @@ namespace ProductService
 
             var products = new List<Product>
         {
-            new Product { Name = "Solar Powered Flashlight"},
+            new Product { Name = "Lecker Bierchen", Price=1.30m, LongDescription="Lecker Bierchen ist ein erfrischendes und wohlschmeckendes Bier, das mit ausgewählten Zutaten gebraut wurde.", ShortDescription ="Erfrischendes Bier mit feiner Hopfennote.", ImageUrl="/images/bier.png"},
+            new Product { Name = "Melon", Price=4.30m, LongDescription="Fruchtig, süß und erfrischend – ideal für den Sommer. Gewachsen mit erlesenen Sonnenstrahlen.", ShortDescription ="Erfrischende Melone ohne Kerne.", ImageUrl="/images/melone.png"},
         };
 
             context.AddRange(products);

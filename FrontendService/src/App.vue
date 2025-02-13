@@ -1,13 +1,29 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button'
+import Topbar from './components/Topbar.vue';
+import Navbar from './components/Navbar.vue';
+import { Toaster } from './components/ui/sonner';
 </script>
 
 <template>
-  <header>
-    <Button>Click me</Button>
-  </header>
-
-  <main></main>
+  <div class="app-container">
+    <Toaster rich-colors />
+    <Topbar></Topbar>
+    <Navbar></Navbar>
+    <div class="content">
+      <router-view />
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.content {
+  margin-top: 20px;
+}
+</style>
