@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import ProductCard from './ProductCard.vue'
+import { Rat } from 'lucide-vue-next'
 
 interface Product {
   id: string
@@ -8,6 +9,7 @@ interface Product {
   shortDescription: string
   longDescription: string
   price: number
+  rating: number
   imageUrl: string
 }
 
@@ -34,6 +36,7 @@ onMounted(async () => {
       :short_description="product.shortDescription"
       :description="product.longDescription"
       :price="product.price"
+      :rating="product.rating"
       :imageUrl="product.imageUrl"
     />
   </div>

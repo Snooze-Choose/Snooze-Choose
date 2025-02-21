@@ -7,6 +7,7 @@
         public decimal Price { get; set; }
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
+        public decimal Rating { get; set; }
         public string? ImageUrl { get; set; }
 
     }
