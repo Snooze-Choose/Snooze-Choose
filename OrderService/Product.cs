@@ -4,16 +4,18 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Amount { get; set; }
+        public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get ; private set; }
+        public string? ImageUrl { get; set; }
 
-        public Product(string name, int amount, decimal unitPrice)
+        public Product(string name, int quantity, decimal unitPrice, string? imageUrl = null)
         {
             Name = name;
-            Amount = amount;
+            Quantity = quantity;
             UnitPrice = unitPrice;
-            TotalPrice = unitPrice*amount;
+            TotalPrice = unitPrice*quantity;
+            ImageUrl = imageUrl;
         }
     }
 }
