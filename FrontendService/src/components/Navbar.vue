@@ -82,7 +82,7 @@ const cartItemCount = computed(() =>
 
       <NavigationMenuItem>
         <NavigationMenuLink href="/warenkorb" :class="navigationMenuTriggerStyle()">
-          Warenkorb ({{ cartItemCount }}) <!-- Reaktiver Zugriff -->
+          Warenkorb ({{ cartItemCount }})
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>

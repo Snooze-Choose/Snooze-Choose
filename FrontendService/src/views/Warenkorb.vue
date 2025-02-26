@@ -21,8 +21,8 @@ const cartTotal = computed(() => {
 })
 
 const cartQuantityTotal = computed(() => {
-  return cartStore.items.reduce((total, item) => total + item.quantity, 0);
-});
+  return cartStore.items.reduce((total, item) => total + item.quantity, 0)
+})
 
 const removeFromCart = (id: string) => {
   cartStore.removeProductFromCart(id)
@@ -34,6 +34,10 @@ const clearCart = () => {
 
 const goToCheckout = () => {
   router.push({ name: 'Checkout' })
+}
+
+function getFullImageUrl(imageUrl: String) {
+  return import.meta.env.services__productservice__https__0 + imageUrl
 }
 </script>
 
@@ -60,7 +64,14 @@ const goToCheckout = () => {
         </TableHeader>
         <TableBody>
           <TableRow v-for="item in cartItems" :key="item.id">
-            <TableCell>{{ item.name }}</TableCell>
+            <TableCell class="flex flex-col items-start">
+              <span class="font-semibold">{{ item.name }}</span>
+              <img
+                :src="getFullImageUrl(item.imageUrl)"
+                alt="Produktbild"
+                class="w-24 h-24 object-cover rounded mt-2"
+              />
+            </TableCell>
             <TableCell>{{ item.price.toFixed(2) }} €</TableCell>
             <TableCell>
               <Input type="number" v-model.number="item.quantity" min="1" class="w-16" />
@@ -76,7 +87,7 @@ const goToCheckout = () => {
       <div class="flex justify-between mt-2">
         <p class="text-lg font-bold">Gesamtsumme:</p>
         <p class="text-lg font-bold">{{ cartTotal.toFixed(2) }} €</p>
-      </div>      
+      </div>
       <Separator class="my-4" />
       <div class="flex justify-between mt-4">
         <Button variant="secondary" @click="clearCart">Warenkorb leeren</Button>

@@ -5,6 +5,7 @@ import Warenkorb from './views/Warenkorb.vue'
 import Profile from './components/Profile.vue'
 import keycloak from './keycloak'
 import Checkout from './views/Checkout.vue'
+import OrderConfirmation from './views/OrderConfirmation.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,7 +37,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/checkout',
     name: 'Checkout',
     component: Checkout
-  }  
+  },
+  {
+    path: '/order-confirmation',
+    name: 'OrderConfirmation',
+    component: OrderConfirmation
+  } 
 ]
 
 const router = createRouter({

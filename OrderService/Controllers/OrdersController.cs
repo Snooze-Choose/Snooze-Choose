@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace OrderService.Controllers
 {
@@ -18,7 +15,6 @@ namespace OrderService.Controllers
         }
 
         // GET: api/<OrderController>
-     
         [HttpGet]
         public IEnumerable<Order> Get()
         {
@@ -27,9 +23,16 @@ namespace OrderService.Controllers
 
         // GET api/<OrderController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Order> Get(int id)
         {
-            return "value";
+            var order = _context.Orders.Include(o => o.Products).FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
         }
 
         // POST api/<OrderController>
@@ -38,6 +41,27 @@ namespace OrderService.Controllers
         {
             if (order == null) return BadRequest("Order cannot be null");
 
+            var newProducts = new List<Product>();
+
+            foreach (var product in order.Products)
+            {
+                // Prüfe, ob das Produkt mit derselben ID bereits existiert
+                var existingProduct = _context.Set<Product>().FirstOrDefault(p => p.Id == product.Id);
+
+                if (existingProduct != null)
+                {
+                    // Falls Produkt existiert, verwende die existierende Instanz
+                    newProducts.Add(existingProduct);
+                }
+                else
+                {
+                    // Falls Produkt neu ist, speichere es neu
+                    newProducts.Add(product);
+                }
+            }
+
+            // Setze die neue Produktliste für die Bestellung
+            order.Products = newProducts;
 
             _context.Orders.Add(order);
             _context.SaveChanges();
@@ -47,14 +71,46 @@ namespace OrderService.Controllers
 
         // PUT api/<OrderController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Order updatedOrder)
         {
+            if (updatedOrder == null || id != updatedOrder.Id)
+                return BadRequest("Invalid order data");
+
+            var existingOrder = _context.Orders.Include(o => o.Products).FirstOrDefault(o => o.Id == id);
+
+            if (existingOrder == null)
+                return NotFound();
+
+            existingOrder.FirstName = updatedOrder.FirstName;
+            existingOrder.LastName = updatedOrder.LastName;
+            existingOrder.Street = updatedOrder.Street;
+            existingOrder.HouseNumber = updatedOrder.HouseNumber;
+            existingOrder.City = updatedOrder.City;
+            existingOrder.PostalCode = updatedOrder.PostalCode;
+            existingOrder.TotalPrice = updatedOrder.TotalPrice;
+            existingOrder.PaymentMethod = updatedOrder.PaymentMethod;
+            existingOrder.OrderStatus = updatedOrder.OrderStatus;
+
+            _context.SaveChanges();
+
+            return NoContent();
         }
 
         // DELETE api/<OrderController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var order = _context.Orders.Find(id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            _context.Orders.Remove(order);
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }
