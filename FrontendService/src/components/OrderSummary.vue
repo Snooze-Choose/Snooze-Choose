@@ -4,18 +4,13 @@ import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator';
 import { computed, defineProps } from 'vue';
 
-// Props für Bestelldaten aus dem Backend
 const props = defineProps({
   orderData: { type: Object, required: false }
 });
 
 const cartStore = useCartStore();
-
-// Dynamische Datenquelle
 const items = computed(() => props.orderData?.products || cartStore.items);
 const totalPrice = computed(() => props.orderData?.totalPrice || cartStore.cartTotal);
-
-// Bild-URL-Handler
 function getFullImageUrl(imageUrl?: string) {
   return imageUrl 
     ? import.meta.env.services__productservice__https__0 + imageUrl 

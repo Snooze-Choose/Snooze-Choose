@@ -136,7 +136,7 @@ const placeOrder = async () => {
     router.push({
       path: '/order-confirmation',
       query: {
-        orderId: responseData.id, // zu id ändern
+        orderId: responseData.id,
         totalPrice: cartStore.cartTotal.toFixed(2)
       }
     })

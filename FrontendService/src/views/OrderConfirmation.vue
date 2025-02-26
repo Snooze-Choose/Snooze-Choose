@@ -13,7 +13,6 @@ const order = ref<any>(null)
 const isLoading = ref(true)
 const errorMessage = ref('')
 
-// API-Call zum Abrufen der Bestelldaten
 onMounted(async () => {
   const orderId = route.query.orderId
 
