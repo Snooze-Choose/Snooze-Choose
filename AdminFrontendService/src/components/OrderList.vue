@@ -3,13 +3,6 @@ import { onMounted, ref, h } from 'vue'
 import type { ColumnDef, SortingState } from '@tanstack/vue-table'
 
 import { Button } from '@/components/ui/button'
-import { Checkbox } from './ui/checkbox'
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import {
   Table,
@@ -28,21 +21,31 @@ import {
   useVueTable
 } from '@tanstack/vue-table'
 
-import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
+import { ArrowUpDown } from 'lucide-vue-next'
 import keycloak from '@/keycloak'
 import OrderDetailDialog from './OrderDetailDialog.vue'
 
 export interface Order {
   id: number
-  customerName: string
-  address: string
-  products: Products[]
+  firstName: string
+  lastName: string
+  street: string
+  houseNumber: string
+  city: string
+  postalCode: string
+  orderStatus: string
+  orderDate: string
+  totalPrice: number
+  products: Product[]
 }
 
-interface Products {
+interface Product {
   id: number
   name: string
-  amount: number
+  quantity: number
+  unitPrice: number
+  totalPrice: number
+  imageUrl: string | null
 }
 
 const orders = ref<Order[]>([])
@@ -55,7 +58,7 @@ const fetchOrders = async () => {
   try {
     loading.value = true
     const token = keycloak.token
-    const response = await fetch('/api/orders', {
+    const response = await fetch('/api/orders/admin', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -81,7 +84,7 @@ const columns: ColumnDef<Order>[] = [
     header: 'ID'
   },
   {
-    accessorKey: 'customerName',
+    id: 'customerName',
     header: ({ column }) =>
       h(
         Button,
@@ -90,11 +93,27 @@ const columns: ColumnDef<Order>[] = [
           onClick: () => column.toggleSorting(column.getIsSorted() === 'asc')
         },
         () => ['Kunde', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })]
-      )
+      ),
+    cell: ({ row }) => `${row.original.firstName} ${row.original.lastName}`
   },
   {
-    accessorKey: 'address',
-    header: 'Adresse'
+    header: 'Adresse',
+    cell: ({ row }) =>
+      `${row.original.street} ${row.original.houseNumber}, ${row.original.postalCode} ${row.original.city}`
+  },
+  {
+    accessorKey: 'orderStatus',
+    header: 'Status'
+  },
+  {
+    accessorKey: 'orderDate',
+    header: 'Bestelldatum',
+    cell: ({ row }) => new Date(row.original.orderDate).toLocaleDateString()
+  },
+  {
+    accessorKey: 'totalPrice',
+    header: 'Gesamtpreis',
+    cell: ({ row }) => `${row.original.totalPrice.toFixed(2)} €`
   }
 ]
 
@@ -124,13 +143,13 @@ const openEditDialog = (order: Order) => {
     <div class="flex gap-2 items-center py-4">
       <Input
         class="max-w-sm"
-        placeholder="Filter orders..."
-        :model-value="table.getColumn('customerName')?.getFilterValue() as string"
-        @update:model-value="table.getColumn('customerName')?.setFilterValue($event)"
+        placeholder="Suche nach Vornamen..."
+        :model-value="table.getColumn('firstName')?.getFilterValue() as string"
+        @update:model-value="table.getColumn('firstName')?.setFilterValue($event)"
       />
     </div>
 
-    <div v-if="loading" class="text-center py-4">Loading orders...</div>
+    <div v-if="loading" class="text-center py-4">Bestellungen werden geladen...</div>
 
     <div v-else-if="error" class="text-center text-red-500 py-4">
       {{ error }}
@@ -163,11 +182,14 @@ const openEditDialog = (order: Order) => {
             </template>
           </template>
           <TableRow v-else>
-            <TableCell :colspan="columns.length" class="h-24 text-center"> No results. </TableCell>
+            <TableCell :colspan="columns.length" class="h-24 text-center">
+              Keine Ergebnisse.
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
     </div>
+
     <OrderDetailDialog v-model="isDialogOpen" :selectedOrder="selectedOrder" />
   </div>
 </template>
