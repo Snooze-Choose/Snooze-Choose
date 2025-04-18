@@ -15,7 +15,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddAuthentication()
                 .AddKeycloakJwtBearer(
                     serviceName: "keycloak",
-                    realm: "adminfrontend",
+                    realm: "frontend",
                     configureOptions: options =>
                     {
                         options.RequireHttpsMetadata = false;
