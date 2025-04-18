@@ -12,11 +12,9 @@ import router from '@/router'
 
 const cartStore = useCartStore()
 const cartItems = computed(() => {
-  console.log('cartItems aktualisiert:', cartStore.items)
   return cartStore.items
 })
 const cartTotal = computed(() => {
-  console.log('cartTotal aktualisiert:', cartStore.cartTotal)
   return cartStore.cartTotal
 })
 

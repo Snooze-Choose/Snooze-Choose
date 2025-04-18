@@ -91,7 +91,6 @@ onMounted(async () => {
     if (response.ok) {
       const data = await response.json()
       orders.value = data
-      console.log(orders.value)
     } else {
       console.error('Fehler beim Laden der Bestellungen:', response.statusText)
     }

@@ -29,7 +29,6 @@ onMounted(async () => {
     order.value = await response.json()
   } catch (error) {
     errorMessage.value = 'Fehler beim Laden der Bestellung.'
-    console.error(error)
   } finally {
     isLoading.value = false
   }
