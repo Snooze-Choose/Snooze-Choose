@@ -16,8 +16,8 @@ namespace OrderService.Controllers
             this._context = context;
         }
 
-        [Authorize]
         // GET: api/<OrderController>
+        [Authorize(AuthenticationSchemes = "FrontendScheme")]
         [HttpGet]
         public IEnumerable<Order> Get()
         {
@@ -26,6 +26,18 @@ namespace OrderService.Controllers
             return _context.Orders
                    .Where(o => o.User_id == userId)  
                    .Include(o => o.Products)         
+                   .ToList();
+        }
+
+        // GET: api/<OrderController>
+        [Authorize(AuthenticationSchemes = "AdminFrontendScheme")]
+        [HttpGet("admin")]
+        public IEnumerable<Order> GetForAdmin()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return _context.Orders
+                   .Include(o => o.Products)
                    .ToList();
         }
 
@@ -73,7 +85,7 @@ namespace OrderService.Controllers
             return CreatedAtAction(nameof(Get), new { id = order.Id }, order);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "FrontendScheme")]
         [HttpPost("logged")]
         public ActionResult<Order> LoggedPost([FromBody] Order order)
         {
