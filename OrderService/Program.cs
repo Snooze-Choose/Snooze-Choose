@@ -13,14 +13,25 @@ builder.Services.AddCors();
 builder.Services.AddOpenApi();
 
 builder.Services.AddAuthentication()
-                .AddKeycloakJwtBearer(
-                    serviceName: "keycloak",
-                    realm: "adminfrontend",
-                    configureOptions: options =>
-                    {
-                        options.RequireHttpsMetadata = false;
-                        options.Audience = "account";
-                    });
+    .AddKeycloakJwtBearer(
+        authenticationScheme: "FrontendScheme",
+        serviceName: "keycloak",
+        realm: "frontend",
+        configureOptions: options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.Audience = "account";
+        })
+    .AddKeycloakJwtBearer(
+        authenticationScheme: "AdminFrontendScheme",
+        serviceName: "keycloak",
+        realm: "adminfrontend",
+        configureOptions: options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.Audience = "account";
+        });
+
 
 builder.Services.AddAuthorizationBuilder();
 

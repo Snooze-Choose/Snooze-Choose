@@ -17,6 +17,7 @@ import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { Progress } from '@/components/ui/progress'
 import OrderSummary from '@/components/OrderSummary.vue'
+import keycloak from '@/keycloak'
 
 const router = useRouter()
 const cartStore = useCartStore()
@@ -104,10 +105,10 @@ const placeOrder = async () => {
     city: city.value,
     postalCode: postalCode.value,
     products: cartStore.items.map((item) => ({
-      id: item.id,  
-      name: item.name,  
-      quantity: item.quantity,  
-      unitPrice: item.price,  
+      id: item.id,
+      name: item.name,
+      quantity: item.quantity,
+      unitPrice: item.price,
       totalPrice: (item.price * item.quantity).toFixed(2),
       productImageUrl: item.imageUrl
     })),
@@ -119,14 +120,24 @@ const placeOrder = async () => {
       expiryDate: expiryDate.value,
       cvv: cvv.value
     })
-  };
-
+  }
   try {
-    const response = await fetch('/api/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderData)
-    })
+    let response
+
+    if (keycloak.authenticated) {
+      const token = keycloak.token
+      response = await fetch('/api/orders/logged', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify(orderData)
+      })
+    } else {
+      response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      })
+    }
 
     if (!response.ok) throw new Error('Bestellung konnte nicht gespeichert werden.')
 

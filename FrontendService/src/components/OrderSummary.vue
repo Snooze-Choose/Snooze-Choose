@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { useCartStore } from '@/store/cart';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { computed, defineProps } from 'vue';
+import { useCartStore } from '@/store/cart'
+import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { computed, defineProps } from 'vue'
 
 const props = defineProps({
   orderData: { type: Object, required: false }
-});
+})
 
-const cartStore = useCartStore();
-const items = computed(() => props.orderData?.products || cartStore.items);
-const totalPrice = computed(() => props.orderData?.totalPrice || cartStore.cartTotal);
+const cartStore = useCartStore()
+const items = computed(() => props.orderData?.products || cartStore.items)
+const totalPrice = computed(() => props.orderData?.totalPrice || cartStore.cartTotal)
+
 function getFullImageUrl(imageUrl?: string) {
-  return imageUrl 
-    ? import.meta.env.services__productservice__https__0 + imageUrl 
-    : '/placeholder-image.jpg'; // Fallback für fehlende Bilder
+  return imageUrl
+    ? import.meta.env.services__productservice__https__0 + imageUrl
+    : '/placeholder-image.jpg'
 }
 </script>
 
@@ -25,14 +26,10 @@ function getFullImageUrl(imageUrl?: string) {
     </CardHeader>
     <CardContent class="p-4">
       <ul class="divide-y divide-gray-300">
-        <li 
-          v-for="item in items" 
-          :key="item.id" 
-          class="flex items-center gap-4 py-3"
-        >
-          <img 
-            :src="getFullImageUrl(item.imageUrl)" 
-            alt="Produktbild" 
+        <li v-for="item in items" :key="item.id" class="flex items-center gap-4 py-3">
+          <img
+            :src="getFullImageUrl(item.imageUrl)"
+            alt="Produktbild"
             class="w-24 h-24 object-cover rounded-md border"
           />
           <div class="flex-1">
@@ -44,7 +41,7 @@ function getFullImageUrl(imageUrl?: string) {
           </p>
         </li>
       </ul>
-      
+
       <Separator class="my-4" />
 
       <div class="flex justify-between text-lg font-semibold text-gray-800">

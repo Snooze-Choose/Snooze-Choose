@@ -6,7 +6,7 @@ namespace OrderService
     public class Order
     {
         public int Id { get; set; }
-
+        public string? User_id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Street { get; set; }

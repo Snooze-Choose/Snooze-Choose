@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace OrderService.Controllers
@@ -15,10 +17,28 @@ namespace OrderService.Controllers
         }
 
         // GET: api/<OrderController>
+        [Authorize(AuthenticationSchemes = "FrontendScheme")]
         [HttpGet]
         public IEnumerable<Order> Get()
         {
-            return _context.Orders.Include(o => o.Products).ToList();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return _context.Orders
+                   .Where(o => o.User_id == userId)  
+                   .Include(o => o.Products)         
+                   .ToList();
+        }
+
+        // GET: api/<OrderController>
+        [Authorize(AuthenticationSchemes = "AdminFrontendScheme")]
+        [HttpGet("admin")]
+        public IEnumerable<Order> GetForAdmin()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return _context.Orders
+                   .Include(o => o.Products)
+                   .ToList();
         }
 
         // GET api/<OrderController>/5
@@ -45,23 +65,52 @@ namespace OrderService.Controllers
 
             foreach (var product in order.Products)
             {
-                // Prüfe, ob das Produkt mit derselben ID bereits existiert
                 var existingProduct = _context.Set<Product>().FirstOrDefault(p => p.Id == product.Id);
 
                 if (existingProduct != null)
                 {
-                    // Falls Produkt existiert, verwende die existierende Instanz
                     newProducts.Add(existingProduct);
                 }
                 else
                 {
-                    // Falls Produkt neu ist, speichere es neu
                     newProducts.Add(product);
                 }
             }
 
-            // Setze die neue Produktliste für die Bestellung
             order.Products = newProducts;
+
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(Get), new { id = order.Id }, order);
+        }
+
+        [Authorize(AuthenticationSchemes = "FrontendScheme")]
+        [HttpPost("logged")]
+        public ActionResult<Order> LoggedPost([FromBody] Order order)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (order == null) return BadRequest("Order cannot be null");
+
+            var newProducts = new List<Product>();
+
+            foreach (var product in order.Products)
+            {
+                var existingProduct = _context.Set<Product>().FirstOrDefault(p => p.Id == product.Id);
+
+                if (existingProduct != null)
+                {
+                    newProducts.Add(existingProduct);
+                }
+                else
+                {
+                    newProducts.Add(product);
+                }
+            }
+
+            order.Products = newProducts;
+            order.User_id = userId;
 
             _context.Orders.Add(order);
             _context.SaveChanges();
