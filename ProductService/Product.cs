@@ -9,6 +9,7 @@
         public string LongDescription { get; set; }
         public decimal Rating { get; set; }
         public string? ImageUrl { get; set; }
+        public Kategorie Kategorie { get; set; }
 
     }
 }
