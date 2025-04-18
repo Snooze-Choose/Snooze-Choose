@@ -24,8 +24,8 @@ namespace OrderService.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             return _context.Orders
-                   .Where(o => o.User_id == userId)  // Filtere nach User_id
-                   .Include(o => o.Products)         // Lade die zugehörigen Produkte
+                   .Where(o => o.User_id == userId)  
+                   .Include(o => o.Products)         
                    .ToList();
         }
 
