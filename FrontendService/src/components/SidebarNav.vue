@@ -14,7 +14,7 @@ const sidebarNavItems: Item[] = [
   },
   {
     title: 'Meine Bestellungen',
-    href: '/settings/orders'
+    href: '/settings/bestelluebersicht'
   },
   {
     title: 'Appearance',

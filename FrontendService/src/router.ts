@@ -9,6 +9,7 @@ import OrderConfirmation from './views/OrderConfirmation.vue'
 import Haushalt from './views/Haushalt.vue'
 import Technik from './views/Technik.vue'
 import Nahrung from './views/Nahrung.vue'
+import Bestelluebersicht from './components/Bestelluebersicht.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -42,6 +43,12 @@ const routes: Array<RouteRecordRaw> = [
         path: 'profile',
         name: 'Profile',
         component: Profile,
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'bestelluebersicht',
+        name: 'bestelluebersicht',
+        component: Bestelluebersicht,
         meta: { requiresAuth: true }
       }
     ]

@@ -72,7 +72,9 @@ const getInitials = (firstName: string, lastName: string) => {
 
       <DropdownMenuGroup v-if="isAuthenticated">
         <DropdownMenuItem @click="navigateTo('profile')">Profile</DropdownMenuItem>
-        <DropdownMenuItem @click="navigateTo('orders')">Meine Bestellungen</DropdownMenuItem>
+        <DropdownMenuItem @click="navigateTo('bestelluebersicht')"
+          >Meine Bestellungen</DropdownMenuItem
+        >
         <DropdownMenuItem @click="navigateTo('appearance')">Appearance</DropdownMenuItem>
       </DropdownMenuGroup>
 
