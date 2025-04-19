@@ -7,6 +7,14 @@ namespace OrderService
         public OrderContext(DbContextOptions<OrderContext> options) : base(options) { }
 
         public DbSet<Order> Orders { get; set; } = default!;
+        public DbSet<Product> Products { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.Products)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 
     public static class Extensions

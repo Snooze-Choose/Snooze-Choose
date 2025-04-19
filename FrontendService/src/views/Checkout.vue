@@ -105,7 +105,6 @@ const placeOrder = async () => {
     city: city.value,
     postalCode: postalCode.value,
     products: cartStore.items.map((item) => ({
-      id: item.id,
       name: item.name,
       quantity: item.quantity,
       unitPrice: item.price,
@@ -126,6 +125,7 @@ const placeOrder = async () => {
 
     if (keycloak.authenticated) {
       const token = keycloak.token
+      console.log(orderData)
       response = await fetch('/api/orders/logged', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },

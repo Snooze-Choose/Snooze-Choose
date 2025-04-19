@@ -59,27 +59,14 @@ namespace OrderService.Controllers
         [HttpPost]
         public ActionResult<Order> Post([FromBody] Order order)
         {
-            if (order == null) return BadRequest("Order cannot be null");
+            if (order == null)
+                return BadRequest("Order cannot be null");
 
-            var newProducts = new List<Product>();
-
-            foreach (var product in order.Products)
-            {
-                var existingProduct = _context.Set<Product>().FirstOrDefault(p => p.Id == product.Id);
-
-                if (existingProduct != null)
-                {
-                    newProducts.Add(existingProduct);
-                }
-                else
-                {
-                    newProducts.Add(product);
-                }
-            }
-
-            order.Products = newProducts;
+          
+            order.TotalPrice = order.Products.Sum(p => p.Quantity * p.UnitPrice);
 
             _context.Orders.Add(order);
+
             _context.SaveChanges();
 
             return CreatedAtAction(nameof(Get), new { id = order.Id }, order);
@@ -93,26 +80,13 @@ namespace OrderService.Controllers
 
             if (order == null) return BadRequest("Order cannot be null");
 
-            var newProducts = new List<Product>();
+            order.TotalPrice = order.Products.Sum(p => p.Quantity * p.UnitPrice);
 
-            foreach (var product in order.Products)
-            {
-                var existingProduct = _context.Set<Product>().FirstOrDefault(p => p.Id == product.Id);
 
-                if (existingProduct != null)
-                {
-                    newProducts.Add(existingProduct);
-                }
-                else
-                {
-                    newProducts.Add(product);
-                }
-            }
-
-            order.Products = newProducts;
             order.User_id = userId;
 
             _context.Orders.Add(order);
+
             _context.SaveChanges();
 
             return CreatedAtAction(nameof(Get), new { id = order.Id }, order);
