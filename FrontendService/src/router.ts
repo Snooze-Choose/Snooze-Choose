@@ -3,8 +3,10 @@ import Home from './views/Home.vue'
 import Settings from './views/Settings.vue'
 import Warenkorb from './views/Warenkorb.vue'
 import Profile from './components/Profile.vue'
+import Order from './components/OrdersOverview.vue'
 import keycloak from './keycloak'
 import Checkout from './views/Checkout.vue'
+import OrderDetails from './components/OrderDetails.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +26,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Profile',
         component: Profile,
         meta: { requiresAuth: true }
+      },
+      {
+        path: 'order',
+        name: 'Order',
+        component: Order,
+        meta: { requiresAuth: true }
       }
     ]
   },
@@ -36,7 +44,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/checkout',
     name: 'Checkout',
     component: Checkout
-  }  
+  },  
+  {
+    path: '/orders',
+    component: Order
+  },
+  {
+    path: '/orders/:orderId',
+    component: OrderDetails,
+    props: true
+  }
 ]
 
 const router = createRouter({
