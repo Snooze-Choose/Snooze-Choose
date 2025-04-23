@@ -19,8 +19,13 @@ namespace ProductService.Controllers
 
         // GET: api/<ProductsController>
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public IEnumerable<Product> Get([FromQuery] Kategorie? kategorie)
         {
+            if (kategorie.HasValue)
+            {
+                return _context.Products.Where(p => p.Kategorie == kategorie.Value).ToList();
+            }
+
             return _context.Products.ToList();
         }
 

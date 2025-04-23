@@ -14,7 +14,7 @@ onMounted(() => {
 const openAccountManagement = () => {
   if (keycloak) {
     const accountManagementUrl = keycloak.createAccountUrl()
-    window.open(accountManagementUrl, '_blank') // öffnet die Seite in einem neuen Tab
+    window.open(accountManagementUrl, '_blank')
   }
 }
 </script>

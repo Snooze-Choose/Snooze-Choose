@@ -27,8 +27,9 @@ const props = defineProps<{
   selectedOrder: Order | null
 }>()
 
-const emit = defineEmits(['update:modelValue'])
 console.log(props.selectedOrder)
+
+const emit = defineEmits(['update:modelValue'])
 </script>
 
 <template>
@@ -45,7 +46,7 @@ console.log(props.selectedOrder)
             id="name"
             class="col-span-3"
             type="email"
-            :model-value="props.selectedOrder?.customerName"
+            :model-value="props.selectedOrder?.firstName + ' ' + props.selectedOrder?.lastName"
             readonly
           />
         </div>
@@ -55,7 +56,13 @@ console.log(props.selectedOrder)
             id="address"
             class="col-span-3"
             type="email"
-            :model-value="props.selectedOrder?.address"
+            :model-value="
+              props.selectedOrder?.street +
+              ' ' +
+              props.selectedOrder?.houseNumber +
+              ', ' +
+              props.selectedOrder?.city
+            "
             readonly
           />
         </div>
@@ -71,7 +78,7 @@ console.log(props.selectedOrder)
             <TableRow v-for="product in props.selectedOrder?.products" :key="product.id">
               <TableCell>{{ product.id }} </TableCell>
               <TableCell>{{ product.name }}</TableCell>
-              <TableCell>{{ product.amount }}</TableCell>
+              <TableCell>{{ product.quantity }}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace OrderService.Controllers
 {
@@ -18,28 +17,76 @@ namespace OrderService.Controllers
         }
 
         // GET: api/<OrderController>
-     
+        [Authorize(AuthenticationSchemes = "FrontendScheme")]
         [HttpGet]
         public IEnumerable<Order> Get()
         {
-            return _context.Orders.Include(o => o.Products).ToList();
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return _context.Orders
+                   .Where(o => o.User_id == userId)  
+                   .Include(o => o.Products)         
+                   .ToList();
+        }
+
+        // GET: api/<OrderController>
+        [Authorize(AuthenticationSchemes = "AdminFrontendScheme")]
+        [HttpGet("admin")]
+        public IEnumerable<Order> GetForAdmin()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return _context.Orders
+                   .Include(o => o.Products)
+                   .ToList();
         }
 
         // GET api/<OrderController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Order> Get(int id)
         {
-            return "value";
+            var order = _context.Orders.Include(o => o.Products).FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
         }
 
         // POST api/<OrderController>
         [HttpPost]
         public ActionResult<Order> Post([FromBody] Order order)
         {
-            if (order == null) return BadRequest("Order cannot be null");
+            if (order == null)
+                return BadRequest("Order cannot be null");
 
+          
+            order.TotalPrice = order.Products.Sum(p => p.Quantity * p.UnitPrice);
 
             _context.Orders.Add(order);
+
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(Get), new { id = order.Id }, order);
+        }
+
+        [Authorize(AuthenticationSchemes = "FrontendScheme")]
+        [HttpPost("logged")]
+        public ActionResult<Order> LoggedPost([FromBody] Order order)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (order == null) return BadRequest("Order cannot be null");
+
+            order.TotalPrice = order.Products.Sum(p => p.Quantity * p.UnitPrice);
+
+
+            order.User_id = userId;
+
+            _context.Orders.Add(order);
+
             _context.SaveChanges();
 
             return CreatedAtAction(nameof(Get), new { id = order.Id }, order);
@@ -47,14 +94,46 @@ namespace OrderService.Controllers
 
         // PUT api/<OrderController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Order updatedOrder)
         {
+            if (updatedOrder == null || id != updatedOrder.Id)
+                return BadRequest("Invalid order data");
+
+            var existingOrder = _context.Orders.Include(o => o.Products).FirstOrDefault(o => o.Id == id);
+
+            if (existingOrder == null)
+                return NotFound();
+
+            existingOrder.FirstName = updatedOrder.FirstName;
+            existingOrder.LastName = updatedOrder.LastName;
+            existingOrder.Street = updatedOrder.Street;
+            existingOrder.HouseNumber = updatedOrder.HouseNumber;
+            existingOrder.City = updatedOrder.City;
+            existingOrder.PostalCode = updatedOrder.PostalCode;
+            existingOrder.TotalPrice = updatedOrder.TotalPrice;
+            existingOrder.PaymentMethod = updatedOrder.PaymentMethod;
+            existingOrder.OrderStatus = updatedOrder.OrderStatus;
+
+            _context.SaveChanges();
+
+            return NoContent();
         }
 
         // DELETE api/<OrderController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var order = _context.Orders.Find(id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            _context.Orders.Remove(order);
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }
